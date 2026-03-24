@@ -1,7 +1,6 @@
 import React from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '@hooks/useAuth';
-import './ProtectedRoute.css';
 
 const ProtectedRoute: React.FC = () => {
   const { isLoading, isAuthenticated } = useAuth();
@@ -9,8 +8,11 @@ const ProtectedRoute: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="protected-route-loading" role="status" aria-live="polite">
-        <div className="protected-route-spinner" aria-hidden="true" />
+      <div className="min-h-screen flex items-center justify-center gap-3 text-slate-900 bg-slate-50 font-medium" role="status" aria-live="polite">
+        <div
+          className="w-[18px] h-[18px] border-2 border-slate-300 border-t-slate-900 rounded-full animate-spin"
+          aria-hidden="true"
+        />
         <span>Checking authentication...</span>
       </div>
     );
@@ -24,4 +26,3 @@ const ProtectedRoute: React.FC = () => {
 };
 
 export default ProtectedRoute;
-

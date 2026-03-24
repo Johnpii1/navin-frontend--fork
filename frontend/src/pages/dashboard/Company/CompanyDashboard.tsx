@@ -18,7 +18,7 @@ import {
   Menu,
   QrCode,
 } from "lucide-react";
-import "./CompanyDashboard.css";
+
 
 const CompanyDashboard: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
