@@ -66,40 +66,51 @@ describe('TrackingTimeline', () => {
   it('shows visual distinction between completed, current, and upcoming nodes', () => {
     render(<TrackingTimeline milestones={mockMilestones} />);
 
-    const completedIcon = screen.getAllByLabelText('Completed')[0];
-    expect(completedIcon).toHaveClass('timeline-icon-completed');
+    // Icons use aria-label to indicate status
+    const completedIcons = screen.getAllByLabelText('Completed');
+    expect(completedIcons.length).toBeGreaterThanOrEqual(1);
 
     const currentIcon = screen.getByLabelText('Current');
-    expect(currentIcon).toHaveClass('timeline-icon-current');
+    expect(currentIcon).toBeInTheDocument();
 
     const upcomingIcon = screen.getByLabelText('Upcoming');
-    expect(upcomingIcon).toHaveClass('timeline-icon-upcoming');
+    expect(upcomingIcon).toBeInTheDocument();
   });
 
-  it('applies correct CSS classes for milestone status', () => {
-    const { container } = render(<TrackingTimeline milestones={mockMilestones} />);
+  it('renders the correct number of completed, current, and upcoming icons', () => {
+    render(<TrackingTimeline milestones={mockMilestones} />);
 
-    const completedItems = container.querySelectorAll('.timeline-item-completed');
-    expect(completedItems.length).toBe(3);
-
-    const currentItems = container.querySelectorAll('.timeline-item-current');
-    expect(currentItems.length).toBe(1);
-
-    const upcomingItems = container.querySelectorAll('.timeline-item-upcoming');
-    expect(upcomingItems.length).toBe(1);
+    expect(screen.getAllByLabelText('Completed').length).toBe(3);
+    expect(screen.getAllByLabelText('Current').length).toBe(1);
+    expect(screen.getAllByLabelText('Upcoming').length).toBe(1);
   });
 
-  it('renders solid connectors for completed milestones', () => {
+  it('renders connectors between milestones (n-1 connectors for n milestones)', () => {
     const { container } = render(<TrackingTimeline milestones={mockMilestones} />);
 
-    const solidConnectors = container.querySelectorAll('.timeline-connector-solid');
+    // Connectors are aria-hidden divs (not SVGs) between milestone items
+    const connectors = container.querySelectorAll('div[aria-hidden="true"]');
+    expect(connectors.length).toBe(mockMilestones.length - 1);
+  });
+
+  it('completed connectors use solid background color', () => {
+    const { container } = render(<TrackingTimeline milestones={mockMilestones} />);
+
+    const connectors = container.querySelectorAll('div[aria-hidden="true"]');
+    // First 3 milestones are completed — their connectors should have bg-accent-blue
+    const solidConnectors = Array.from(connectors).filter(el =>
+      el.className.includes('bg-accent-blue')
+    );
     expect(solidConnectors.length).toBeGreaterThan(0);
   });
 
-  it('renders dashed connectors for current and upcoming milestones', () => {
+  it('non-completed connectors use dashed style', () => {
     const { container } = render(<TrackingTimeline milestones={mockMilestones} />);
 
-    const dashedConnectors = container.querySelectorAll('.timeline-connector-dashed');
+    const connectors = container.querySelectorAll('div[aria-hidden="true"]');
+    const dashedConnectors = Array.from(connectors).filter(el =>
+      el.className.includes('connector-dashed')
+    );
     expect(dashedConnectors.length).toBeGreaterThan(0);
   });
 

@@ -108,22 +108,19 @@ describe('MilestoneTimeline', () => {
     expect(expandButtons.length).toBe(1);
   });
 
-  it('applies correct status classes', () => {
-    const { container } = render(<MilestoneTimeline milestones={mockMilestones} />);
-    
-    const completedItem = container.querySelector('.milestone-item-completed');
-    const currentItem = container.querySelector('.milestone-item-current');
-    const upcomingItem = container.querySelector('.milestone-item-upcoming');
-    
-    expect(completedItem).toBeInTheDocument();
-    expect(currentItem).toBeInTheDocument();
-    expect(upcomingItem).toBeInTheDocument();
+  it('renders status icons with correct aria-labels', () => {
+    render(<MilestoneTimeline milestones={mockMilestones} />);
+
+    expect(screen.getByLabelText('Completed')).toBeInTheDocument();
+    expect(screen.getByLabelText('Current')).toBeInTheDocument();
+    expect(screen.getByLabelText('Upcoming')).toBeInTheDocument();
   });
 
   it('renders connectors between milestones', () => {
     const { container } = render(<MilestoneTimeline milestones={mockMilestones} />);
     
-    const connectors = container.querySelectorAll('.milestone-connector');
+    // Connectors are aria-hidden divs (not SVGs) between milestone items
+    const connectors = container.querySelectorAll('div[aria-hidden="true"]');
     
     // Should have n-1 connectors for n milestones
     expect(connectors.length).toBe(mockMilestones.length - 1);
