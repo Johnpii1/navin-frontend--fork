@@ -36,6 +36,7 @@ const ActiveShipments: React.FC = () => {
         {MOCK_ACTIVE_SHIPMENTS.map((shipment) => (
           <div
             key={shipment.id}
+            data-testid="active-shipment-card"
             className="bg-white border border-[#e5e7eb] rounded-lg p-6 flex flex-col gap-4 transition-shadow hover:shadow-[0_4px_12px_rgba(0,0,0,0.08)]"
           >
             <div className="flex justify-between items-center">
@@ -56,7 +57,7 @@ const ActiveShipments: React.FC = () => {
             <button
               type="button"
               className="bg-[#2563eb] text-white border-none rounded-md px-4 py-2.5 text-sm font-medium cursor-pointer transition-colors hover:bg-[#1d4ed8] active:bg-[#1e40af]"
-              onClick={() => navigate(`/shipments/${shipment.id}`)}
+              onClick={() => navigate(`/dashboard/shipments/${shipment.id}`)}
             >
               Track
             </button>
