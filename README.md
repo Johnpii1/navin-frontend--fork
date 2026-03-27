@@ -133,6 +133,16 @@ Quick overview:
 > Follow the file structure in each issue — it tells you exactly where to create your files.
 > See [TAILWIND_MIGRATION.md](docs/TAILWIND_MIGRATION.md) for styling guidelines (available after Issue #92 is merged).
 
+### Developer Guides
+
+| Guide | Description |
+|---|---|
+| **[Frontend Component & Styling Conventions](docs/FRONTEND_COMPONENT_CONVENTIONS.md)** | Folder structure, naming rules, Tailwind-first styling, path aliases, and legacy CSS migration policy — **start here** |
+| [Component Conventions](docs/COMPONENT_CONVENTIONS.md) | TypeScript, exports, props interfaces, and dead code rules |
+| [Tailwind Migration Guide](docs/TAILWIND_MIGRATION.md) | Step-by-step CSS → Tailwind conversion reference |
+| [Tailwind Before/After Examples](docs/TAILWIND_BEFORE_AFTER.md) | Side-by-side migration examples |
+| [Tailwind PR Checklist](docs/TAILWIND_PR_CHECKLIST.md) | Checklist for Tailwind migration PRs |
+
 ---
 
 ## Community

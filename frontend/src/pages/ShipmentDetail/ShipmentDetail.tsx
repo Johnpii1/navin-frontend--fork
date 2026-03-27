@@ -1,7 +1,9 @@
 import React from "react";
 import MilestoneTimeline, { MilestoneDetail } from "./MilestoneTimeline/MilestoneTimeline";
-import DeliveryProofUpload from "./DeliveryProofUpload/DeliveryProofUpload";
 import ShipmentDetailHeader from "./ShipmentDetailHeader/ShipmentDetailHeader";
+import ShipmentMap from "./ShipmentMap/ShipmentMap";
+import DeliveryProofUpload from "./DeliveryProofUpload/DeliveryProofUpload";
+import DeliveryConfirmation from "../../components/shipment/DeliveryConfirmation/DeliveryConfirmation";
 
 const ShipmentDetail: React.FC = () => {
   const shipmentHeaderData = {
@@ -41,6 +43,11 @@ const ShipmentDetail: React.FC = () => {
 
         {/* Content card */}
         <div className="bg-[rgba(8,40,50,0.4)] border-[1.5px] border-[rgba(0,180,160,0.3)] rounded-3xl p-8 backdrop-blur-[12px] shadow-[0_8px_32px_rgba(0,0,0,0.3)] md:p-5 md:rounded-2xl sm:p-4">
+          <ShipmentMap 
+            origin={shipmentHeaderData.originAddress} 
+            destination={shipmentHeaderData.destinationAddress} 
+          />
+
           <ShipmentDetailHeader
             {...shipmentHeaderData}
             onUpdateStatus={handleUpdateStatus}
@@ -57,6 +64,13 @@ const ShipmentDetail: React.FC = () => {
         </div>
 
         <DeliveryProofUpload />
+        <DeliveryConfirmation
+          shipmentId={shipmentHeaderData.shipmentId}
+          status={shipmentHeaderData.status}
+          onConfirm={async (id, rating, feedback) => {
+            console.log('Delivery confirmed', { id, rating, feedback });
+          }}
+        />
       </div>
     </div>
   );

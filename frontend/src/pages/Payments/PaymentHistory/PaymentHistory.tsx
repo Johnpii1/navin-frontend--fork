@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { ChevronDown, ChevronLeft, ChevronRight, ExternalLink, ArrowUpDown } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, ExternalLink, ArrowUpDown, X } from "lucide-react";
 
 type PaymentStatus = "Pending" | "Escrowed" | "Released" | "Failed";
 
@@ -15,11 +15,50 @@ const statusClasses: Record<PaymentStatus, string> = {
   Failed:   "bg-[rgba(239,68,68,0.15)] text-[#f87171] border border-[rgba(239,68,68,0.3)]",
 };
 
+interface PaymentDetailModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  payment: Payment | null;
+}
+
+const PaymentDetailModal: React.FC<PaymentDetailModalProps> = ({ isOpen, onClose, payment }) => {
+  if (!isOpen || !payment) return null;
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={onClose}>
+      <div
+        className="bg-[rgba(8,40,50,0.95)] border border-[rgba(98,255,255,0.2)] rounded-2xl p-6 w-full max-w-md shadow-xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-lg font-bold text-[#62ffff]">Payment Details</h2>
+          <button onClick={onClose} className="text-text-secondary hover:text-white transition-colors"><X size={20} /></button>
+        </div>
+        <dl className="flex flex-col gap-3 text-sm">
+          {([
+            ["Shipment ID", payment.shipmentId],
+            ["Date", payment.date],
+            ["Amount", `$${payment.amount.toLocaleString()} ${payment.token}`],
+            ["Status", payment.status],
+            ["Tx Hash", payment.txHash],
+          ] as [string, string][]).map(([label, value]) => (
+            <div key={label} className="flex justify-between gap-4">
+              <dt className="text-text-secondary">{label}</dt>
+              <dd className="text-white font-medium break-all text-right">{value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  );
+};
+
 const PaymentHistory: React.FC = () => {
   const [isLoading] = useState(false);
   const [filterStatus, setFilterStatus] = useState<PaymentStatus | "All">("All");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [currentPage, setCurrentPage] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPayment, setSelectedPayment] = useState<Payment | null>(null);
   const itemsPerPage = 10;
 
   const allPayments: Payment[] = [
@@ -126,7 +165,14 @@ const PaymentHistory: React.FC = () => {
           </thead>
           <tbody>
             {paginatedPayments.map((payment) => (
-              <tr key={payment.id} className="hover:bg-[rgba(98,255,255,0.05)] transition-colors last:border-b-0">
+              <tr 
+                key={payment.id} 
+                className="hover:bg-[rgba(98,255,255,0.05)] transition-colors last:border-b-0 cursor-pointer"
+                onClick={() => {
+                  setSelectedPayment(payment);
+                  setIsModalOpen(true);
+                }}
+              >
                 <td className={`${tdClass} font-medium text-text-secondary`}>{payment.date}</td>
                 <td className={tdClass}>
                   <Link to={`/dashboard/shipments/${payment.shipmentId}`} className="text-[#62ffff] font-semibold no-underline hover:underline">
@@ -196,6 +242,12 @@ const PaymentHistory: React.FC = () => {
           </button>
         </div>
       </div>
+
+      <PaymentDetailModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        payment={selectedPayment} 
+      />
     </div>
   );
 };
