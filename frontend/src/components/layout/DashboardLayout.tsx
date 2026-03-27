@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   X,
   CreditCard,
+  Bell,
 } from 'lucide-react';
 import TopHeader from './TopHeader/TopHeader';
 
@@ -26,6 +27,7 @@ const DashboardLayout: React.FC = () => {
     { name: 'Settlements', icon: <Wallet size={18} />, path: '/dashboard/settlements' },
     { name: 'Payments', icon: <CreditCard size={18} />, path: '/dashboard/payments' },
     { name: 'Analytics', icon: <BarChart3 size={18} />, path: '/dashboard/analytics' },
+    { name: 'Notifications', icon: <Bell size={18} />, path: '/dashboard/notifications' },
   ];
 
   const systemMenu = [

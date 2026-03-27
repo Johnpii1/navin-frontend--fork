@@ -13,6 +13,7 @@ import CompanySettings from './pages/dashboard/Company/Settings/CompanySettings'
 import HelpCenter from './pages/HelpCenter/HelpCenter';
 import CreateShipment from './pages/dashboard/Company/CreateShipment/CreateShipment';
 import PaymentHistory from './pages/Payments/PaymentHistory/PaymentHistory';
+import NotificationsPage from './pages/Notifications/NotificationsPage';
 import DashboardLayout from './components/layout/DashboardLayout';
 import ProtectedRoute from './components/auth/ProtectedRoute/ProtectedRoute';
 import './App.css';
@@ -79,6 +80,10 @@ const router = createBrowserRouter([
           {
             path: '/dashboard/help-center',
             element: <HelpCenter />,
+          },
+          {
+            path: '/dashboard/notifications',
+            element: <NotificationsPage />,
           },
         ],
       },

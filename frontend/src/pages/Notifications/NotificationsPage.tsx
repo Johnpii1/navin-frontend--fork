@@ -3,6 +3,7 @@ import {
   Truck, FileText, AlertTriangle, Server, Receipt, DollarSign,
 } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type NotificationType = "all" | "shipments" | "settlements" | "system";
 
@@ -30,6 +31,7 @@ const iconStyles: Record<string, string> = {
 };
 
 const NotificationsPage = () => {
+  const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState<NotificationType>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -69,8 +71,11 @@ const NotificationsPage = () => {
   const handleMarkAllAsRead = () =>
     setNotificationsList(notificationsList.map((n) => ({ ...n, isRead: true })));
 
-  const handleNotificationClick = (id: string) =>
+  const handleNotificationClick = (id: string) => {
+    const notification = notificationsList.find((n) => n.id === id);
     setNotificationsList(notificationsList.map((n) => n.id === id ? { ...n, isRead: true } : n));
+    if (notification?.link) navigate(notification.link);
+  };
 
   const filteredNotifications = notificationsList.filter((n) => {
     const matchesFilter = activeFilter === "all" || n.type === activeFilter;
