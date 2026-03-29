@@ -1,3 +1,7 @@
+// Common
+export { default as EmptyState } from './common/EmptyState';
+export type { EmptyStateProps, EmptyStateCTA } from './common/EmptyState';
+
 // Reusable UI primitives
 export { default as Button } from './Button';
 export type { ButtonProps, ButtonVariant, ButtonSize } from './Button';
