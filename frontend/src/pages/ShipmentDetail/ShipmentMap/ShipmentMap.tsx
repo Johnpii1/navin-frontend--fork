@@ -2,9 +2,16 @@
 import React from 'react';
 import './ShipmentMap.css';
 
+interface Coords {
+  lat: number;
+  lng: number;
+}
+
 interface ShipmentMapProps {
   origin: string;
   destination: string;
+  originCoords?: Coords;
+  destinationCoords?: Coords;
 }
 
 const ShipmentMap: React.FC<ShipmentMapProps> = ({ origin, destination }) => {
@@ -32,7 +39,7 @@ const ShipmentMap: React.FC<ShipmentMapProps> = ({ origin, destination }) => {
         />
         <div className="map-overlay">
           <div className="route-glow"></div>
-          <button className="view-full-map-btn" onClick={() => {}}>
+          <button aria-label="View full map" className="view-full-map-btn" onClick={() => {}}>
             VIEW FULL MAP
           </button>
         </div>

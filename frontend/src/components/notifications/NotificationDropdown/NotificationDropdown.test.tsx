@@ -1,6 +1,7 @@
-import React from 'react';
 import { describe, it, expect } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import React from 'react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import NotificationDropdown from './NotificationDropdown';
 
@@ -9,6 +10,37 @@ const renderWithRouter = (component: React.ReactElement) => {
 };
 
 describe('NotificationDropdown', () => {
+  it('opens and displays notifications, closes on ESC and outside click', async () => {
+    const user = userEvent.setup();
+
+    renderWithRouter(<NotificationDropdown />);
+
+    const bell = screen.getByLabelText('Notifications');
+    await user.click(bell);
+
+    expect(screen.getByText('Notifications')).toBeInTheDocument();
+
+    const items = screen.getAllByRole('listitem');
+    expect(items.length).toBeGreaterThanOrEqual(5);
+
+    await user.keyboard('{Escape}');
+    await waitFor(() => expect(screen.queryByText('Notifications')).not.toBeInTheDocument());
+
+    await user.click(bell);
+    expect(screen.getByText('Notifications')).toBeInTheDocument();
+    await user.click(document.body);
+    await waitFor(() => expect(screen.queryByText('Notifications')).not.toBeInTheDocument());
+  });
+
+  it('renders the bell icon with unread badge', () => {
+    renderWithRouter(<NotificationDropdown />);
+    const bellButton = screen.getByLabelText('Notifications');
+    expect(bellButton).toBeInTheDocument();
+
+    const badge = screen.getByText('3');
+    expect(badge).toBeInTheDocument();
+  });
+});
   it('renders the bell icon with unread badge', () => {
     renderWithRouter(<NotificationDropdown />);
     
@@ -64,4 +96,4 @@ describe('NotificationDropdown', () => {
     
     expect(screen.queryByText('View All Notifications')).not.toBeInTheDocument();
   });
-});
+

@@ -18,7 +18,7 @@
     "allowSyntheticDefaultImports": true,
 
     /* Vitest globals (describe / it / expect) */
-    "types": ["node", "react"],
+    "types": ["node", "react", "vitest"],
 
     /* Strict type checking — required for Soroban SDK interop */
     "strict": true,

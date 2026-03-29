@@ -72,7 +72,7 @@ export const NotificationDropdown: React.FC = () => {
       >
         <Bell size={18} />
         {unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 flex items-center justify-center h-4 min-w-4 px-1 rounded-full bg-red-500 text-white text-[10px] font-semibold border-2 border-[#07090d]">
+          <span aria-live="polite" aria-atomic="true" className="absolute -top-1 -right-1 flex items-center justify-center h-4 min-w-4 px-1 rounded-full bg-red-500 text-white text-[10px] font-semibold border-2 border-[#07090d]">
             {unreadCount}
           </span>
         )}
@@ -93,9 +93,10 @@ export const NotificationDropdown: React.FC = () => {
           </div>
 
           {/* List */}
-          <div className="overflow-y-auto max-h-[360px] py-2 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#1e2433] [&::-webkit-scrollbar-thumb]:rounded-[3px] [&::-webkit-scrollbar-thumb:hover]:bg-[#334155]">
+          <div role="list" className="overflow-y-auto max-h-[360px] py-2 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#1e2433] [&::-webkit-scrollbar-thumb]:rounded-[3px] [&::-webkit-scrollbar-thumb:hover]:bg-[#334155]">
             {notifications.slice(0, 5).map((n) => (
               <div
+                role="listitem"
                 key={n.id}
                 className={`flex gap-3 px-5 py-3 cursor-pointer transition-colors border-l-[3px] hover:bg-[#1a1f2e] max-md:px-4 max-md:py-2.5 ${
                   !n.read

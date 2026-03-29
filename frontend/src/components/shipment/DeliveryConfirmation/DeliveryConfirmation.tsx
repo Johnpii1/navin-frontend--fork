@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { CheckCircle2 } from 'lucide-react';
 
 export interface DeliveryConfirmationProps {
@@ -24,8 +24,20 @@ const DeliveryConfirmation: React.FC<DeliveryConfirmationProps> = ({
   const [error, setError] = useState('');
   const [submittedRating, setSubmittedRating] = useState<number>(0);
   const submitGuard = useRef(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const handleConfirmReceipt = () => setView('form');
+
+  useEffect(() => {
+    if (view === 'form') {
+      const firstRadio = containerRef.current?.querySelector('button[role="radio"]') as HTMLButtonElement | null;
+      firstRadio?.focus();
+    }
+    if (view === 'success') {
+      const successEl = containerRef.current?.querySelector('[data-success]') as HTMLElement | null;
+      successEl?.focus();
+    }
+  }, [view]);
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,6 +77,7 @@ const DeliveryConfirmation: React.FC<DeliveryConfirmationProps> = ({
 
   return (
     <div
+      ref={containerRef}
       className="bg-[rgba(8,40,50,0.4)] border-[1.5px] border-[rgba(0,180,160,0.3)] rounded-3xl px-8 py-10 backdrop-blur-[12px] shadow-[0_8px_32px_rgba(0,0,0,0.3)] mt-8 md:px-5 md:py-8 md:rounded-2xl sm:px-4 sm:py-6"
       aria-label="Delivery confirmation"
     >
@@ -171,7 +184,7 @@ const DeliveryConfirmation: React.FC<DeliveryConfirmationProps> = ({
         )}
 
         {view === 'success' && (
-          <div className="flex flex-col items-center gap-5 text-center animate-fade-in-up" role="status" aria-live="polite">
+          <div data-success tabIndex={-1} className="flex flex-col items-center gap-5 text-center animate-fade-in-up" role="status" aria-live="polite">
             <div className="w-16 h-16 rounded-full bg-[rgba(0,212,200,0.15)] border border-[rgba(0,212,200,0.3)] flex items-center justify-center">
               <CheckCircle2 className="w-8 h-8 text-[#00d4c8]" />
             </div>
