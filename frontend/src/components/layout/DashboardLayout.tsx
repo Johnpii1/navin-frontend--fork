@@ -13,6 +13,7 @@ import {
   CreditCard,
   Bell,
   User,
+  History,
 } from 'lucide-react';
 import TopHeader from './TopHeader/TopHeader';
 
@@ -24,6 +25,7 @@ const DashboardLayout: React.FC = () => {
   const mainMenu = [
     { name: 'Dashboard', icon: <LayoutDashboard size={18} />, path: '/dashboard' },
     { name: 'Shipments', icon: <Package size={18} />, path: '/dashboard/shipments' },
+    { name: 'Shipment History', icon: <History size={18} />, path: '/dashboard/shipments/history' },
     { name: 'Blockchain Ledger', icon: <Database size={18} />, path: '/dashboard/blockchain-ledger' },
     { name: 'Settlements', icon: <Wallet size={18} />, path: '/dashboard/settlements' },
     { name: 'Payments', icon: <CreditCard size={18} />, path: '/dashboard/payments' },
