@@ -21,6 +21,7 @@ import DashboardLayout from "./components/layout/DashboardLayout";
 import ProtectedRoute from "./components/auth/ProtectedRoute/ProtectedRoute";
 import "./App.css";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
+import PaginationDemo from "./pages/ComponentDemos/PaginationDemo/PaginationDemo";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
   {
     path: "/forgot-password",
     element: <ForgotPassword />,
+  },
+  {
+    path: "/pagination-demo",
+    element: <PaginationDemo />,
   },
   {
     element: <ProtectedRoute />,
