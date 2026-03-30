@@ -125,6 +125,8 @@ describe('DeliveryConfirmation', () => {
   });
 
   describe('submission behavior', () => {
+    // Each test renders its own instance to avoid pollution
+
     it('submit button is disabled when no rating selected', async () => {
       render(<DeliveryConfirmation {...defaultProps} />);
       await userEvent.click(screen.getByRole('button', { name: /confirm receipt/i }));
@@ -143,6 +145,8 @@ describe('DeliveryConfirmation', () => {
       const onConfirm = vi.fn();
       render(<DeliveryConfirmation {...defaultProps} onConfirm={onConfirm} />);
       await userEvent.click(screen.getByRole('button', { name: /confirm receipt/i }));
+      const form = document.querySelector('form');
+      if (form) fireEvent.submit(form);
       await userEvent.click(screen.getByRole('button', { name: /^submit confirmation$/i }));
       expect(onConfirm).not.toHaveBeenCalled();
     });
@@ -195,6 +199,7 @@ describe('DeliveryConfirmation', () => {
   });
 
   describe('post-submit state', () => {
+    // Each test renders its own instance to avoid pollution
     it('shows thank-you message after successful submission', async () => {
       const onConfirm = vi.fn().mockResolvedValue(undefined);
       render(<DeliveryConfirmation {...defaultProps} onConfirm={onConfirm} />);
