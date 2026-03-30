@@ -85,6 +85,13 @@ describe('TrackingTimeline', () => {
     expect(screen.getAllByLabelText('Upcoming').length).toBe(1);
   });
 
+  it('marks the current milestone as the active step for assistive technologies', () => {
+    render(<TrackingTimeline milestones={mockMilestones} />);
+
+    const currentMilestone = screen.getByRole('listitem', { name: /out for delivery/i });
+    expect(currentMilestone).toHaveAttribute('aria-current', 'step');
+  });
+
   it('renders connectors between milestones (n-1 connectors for n milestones)', () => {
     const { container } = render(<TrackingTimeline milestones={mockMilestones} />);
 

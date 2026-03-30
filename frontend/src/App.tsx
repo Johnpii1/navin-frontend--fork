@@ -1,41 +1,42 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './pages/Home/Home';
-import Signup from './pages/auth/Signup/Signup';
-import Login from './pages/auth/Login/Login';
-import ForgotPassword from './pages/auth/ForgotPassword/ForgotPassword';
-import CompanyDashboard from './pages/dashboard/Company/CompanyDashboard';
-import Shipments from './pages/Shipments/Shipments';
-import BlockchainLedger from './pages/BlockchainLedger/BlockchainLedger';
-import Settlements from './pages/Settlements/Settlements';
-import Analytics from './pages/Analytics/Analytics';
-import UserManagement from './pages/dashboard/Company/UserManagement/UserManagement';
-import CompanySettings from './pages/dashboard/Company/Settings/CompanySettings';
-import HelpCenter from './pages/HelpCenter/HelpCenter';
-import CreateShipment from './pages/dashboard/Company/CreateShipment/CreateShipment';
-import PaymentHistory from './pages/Payments/PaymentHistory/PaymentHistory';
-import NotificationsPage from './pages/Notifications/NotificationsPage';
-import ShipmentDetail from './pages/ShipmentDetail/ShipmentDetail';
-import CustomerProfile from './pages/dashboard/Customer/Profile/CustomerProfile';
-import ShipmentHistory from './pages/dashboard/Customer/ShipmentHistory/ShipmentHistory';
-import DashboardLayout from './components/layout/DashboardLayout';
-import ProtectedRoute from './components/auth/ProtectedRoute/ProtectedRoute';
-import './App.css';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./pages/Home/Home";
+import Signup from "./pages/auth/Signup/Signup";
+import Login from "./pages/auth/Login/Login";
+import ForgotPassword from "./pages/auth/ForgotPassword/ForgotPassword";
+import CompanyDashboard from "./pages/dashboard/Company/CompanyDashboard";
+import Shipments from "./pages/Shipments/Shipments";
+import BlockchainLedger from "./pages/BlockchainLedger/BlockchainLedger";
+import Settlements from "./pages/Settlements/Settlements";
+import Analytics from "./pages/Analytics/Analytics";
+import UserManagement from "./pages/dashboard/Company/UserManagement/UserManagement";
+import CompanySettings from "./pages/dashboard/Company/Settings/CompanySettings";
+import HelpCenter from "./pages/HelpCenter/HelpCenter";
+import CreateShipment from "./pages/dashboard/Company/CreateShipment/CreateShipment";
+import PaymentHistory from "./pages/Payments/PaymentHistory/PaymentHistory";
+import NotificationsPage from "./pages/Notifications/NotificationsPage";
+import ShipmentDetail from "./pages/ShipmentDetail/ShipmentDetail";
+import CustomerProfile from "./pages/dashboard/Customer/Profile/CustomerProfile";
+import ShipmentHistory from "./pages/dashboard/Customer/ShipmentHistory/ShipmentHistory";
+import DashboardLayout from "./components/layout/DashboardLayout";
+import ProtectedRoute from "./components/auth/ProtectedRoute/ProtectedRoute";
+import "./App.css";
+import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <Home />,
   },
   {
-    path: '/signup',
+    path: "/signup",
     element: <Signup />,
   },
   {
-    path: '/login',
+    path: "/login",
     element: <Login />,
   },
   {
-    path: '/forgot-password',
+    path: "/forgot-password",
     element: <ForgotPassword />,
   },
   {
@@ -45,59 +46,59 @@ const router = createBrowserRouter([
         element: <DashboardLayout />,
         children: [
           {
-            path: '/dashboard',
+            path: "/dashboard",
             element: <CompanyDashboard />,
           },
           {
-            path: '/dashboard/shipments',
+            path: "/dashboard/shipments",
             element: <Shipments />,
           },
           {
-            path: '/dashboard/shipments/:id',
+            path: "/dashboard/shipments/:id",
             element: <ShipmentDetail />,
           },
           {
-            path: '/dashboard/shipments/history',
+            path: "/dashboard/shipments/history",
             element: <ShipmentHistory />,
           },
           {
-            path: '/dashboard/shipments/create',
+            path: "/dashboard/shipments/create",
             element: <CreateShipment />,
           },
           {
-            path: '/dashboard/blockchain-ledger',
+            path: "/dashboard/blockchain-ledger",
             element: <BlockchainLedger />,
           },
           {
-            path: '/dashboard/settlements',
+            path: "/dashboard/settlements",
             element: <Settlements />,
           },
           {
-            path: '/dashboard/payments',
+            path: "/dashboard/payments",
             element: <PaymentHistory />,
           },
           {
-            path: '/dashboard/analytics',
+            path: "/dashboard/analytics",
             element: <Analytics />,
           },
           {
-            path: '/dashboard/settings',
+            path: "/dashboard/settings",
             element: <CompanySettings />,
           },
           {
-            path: '/dashboard/team',
+            path: "/dashboard/team",
             element: <UserManagement />,
           },
           {
-            path: '/dashboard/help-center',
+            path: "/dashboard/help-center",
             element: <HelpCenter />,
           },
           {
-            path: '/dashboard/notifications',
+            path: "/dashboard/notifications",
             element: <NotificationsPage />,
           },
           {
-            path: '/dashboard/profile',
+            path: "/dashboard/profile",
             element: <CustomerProfile />,
           },
         ],
@@ -107,7 +108,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <ErrorBoundary>
+      <RouterProvider router={router} />
+    </ErrorBoundary>
+  );
 }
 
 export default App;
