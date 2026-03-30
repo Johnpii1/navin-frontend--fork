@@ -2,6 +2,11 @@
 export { default as EmptyState } from './common/EmptyState';
 export type { EmptyStateProps, EmptyStateCTA } from './common/EmptyState';
 
+export { default as DataTable } from './common/DataTable';
+export type { DataTableProps, ColumnDef, PaginationConfig, DataTableEmptyState, SortDirection } from './common/DataTable';
+export { default as Pagination } from './common/Pagination';
+export type { PaginationProps } from './common/Pagination';
+
 // Reusable UI primitives
 export { default as Button } from './Button';
 export type { ButtonProps, ButtonVariant, ButtonSize } from './Button';
