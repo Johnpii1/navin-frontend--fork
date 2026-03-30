@@ -57,8 +57,8 @@ const PaymentHistory: React.FC = () => {
   const [filterStatus, setFilterStatus] = useState<PaymentStatus | "All">("All");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [currentPage, setCurrentPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState<Payment | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const itemsPerPage = 10;
 
   const allPayments: Payment[] = [
@@ -175,7 +175,11 @@ const PaymentHistory: React.FC = () => {
               >
                 <td className={`${tdClass} font-medium text-text-secondary`}>{payment.date}</td>
                 <td className={tdClass}>
-                  <Link to={`/dashboard/shipments/${payment.shipmentId}`} className="text-[#62ffff] font-semibold no-underline hover:underline">
+                  <Link
+                    to={`/dashboard/shipments/${payment.shipmentId}`}
+                    className="text-[#62ffff] font-semibold no-underline hover:underline"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     {payment.shipmentId}
                   </Link>
                 </td>
@@ -196,6 +200,7 @@ const PaymentHistory: React.FC = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-text-secondary no-underline flex items-center gap-1.5 transition-colors hover:text-[#62ffff]"
+                    onClick={(e) => e.stopPropagation()}
                   >
                     {truncateHash(payment.txHash)}
                     <ExternalLink size={12} className="text-[#62ffff]" />
